@@ -3,6 +3,10 @@
   1. 不要死磕，五毒神掌，死记硬背优秀代码<br>
   2. 区域化刻意练习<br>
 
+## 个人总结
+  
+  之前Java工具用的Eclipse，这周正在尝试Vscode和IDEI哪个更好用，Google直接搜Java的各种用法真的实用。拖延症严重，总是deadline当第一生产力，太过囫囵吞枣，还是要每天固定几道题！！！
+  
 ## 数据结构<br>
   1.一维<br>
     a. 基础：array 数组；linked list 链表<br>
