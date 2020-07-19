@@ -17,4 +17,27 @@
     b. LRU Cache 缓存<br>
   <br>
 
-## 算法<br>
+
+####  分析 Queue 源码
+
+在Java中Queue是继承接口Collection的一个接口。
+
+添加元素方法：
+
+`boolean add(E e);`
+
+`boolean offer(E e);`
+
+删除队列头部元素方法：
+
+`E remove();`
+
+`E poll();`
+
+查看队列头部元素方法：
+
+`E element();`
+
+`E peek();`
+
+其中，add、remove、element操作失败会抛出异常，而offer、poll、peek的操作是返回特殊值
