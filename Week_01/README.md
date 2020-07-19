@@ -18,15 +18,15 @@
   <br>
 
 
-####  分析 Queue 源码
+####   Queue 源码
 
-在Java中Queue是继承接口Collection的一个接口。
+Queue是继承接口Collection的一个接口。
 
 添加元素方法：
 
-`boolean add(E e);`
+`boolean add(E e);` 抛出异常
 
-`boolean offer(E e);`
+`boolean offer(E e);` 抛出特殊值
 
 删除队列头部元素方法：
 
@@ -40,4 +40,9 @@
 
 `E peek();`
 
-其中，add、remove、element操作失败会抛出异常，而offer、poll、peek的操作是返回特殊值
+#### Priority Queue 的源码
+
+Priority Queue的核心Heap，完全二叉树，构建通过heapify()函数，由一个n/2的非叶子节点循环和一个约为树高的logn遍历组成，所以时间复杂度为O(nlogn)。保证每次取出的都是权值最小的，元素的大小通过元素的自然顺序和构造时传入的比较器来判断。增加元素和删除已知数组下标的元素 O(logn)；删除一个未知下标的元素 O(n)
+
+抽象类 AbstractQueue，实现Queue接口的add、remove、element方法，调用offer、poll、peek方法。不允许放入null元素，通过**完全二叉树实现的小顶堆**实现，底层通过**数组**实现。
+
