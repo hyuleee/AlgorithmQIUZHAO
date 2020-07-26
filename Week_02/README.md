@@ -1,6 +1,19 @@
 学习笔记
 
+## 递归
+1.terminator
+2.process current logic
+3.drill down
+4.reverse states
 
+最大的收获就是递归，超哥给的递归四步太棒了，看到递归就直接先把四步写上去，再慢慢找条件。将整个递归缩减为重复子条件
+
+另外使用堆的时候查找最大数用小顶堆，最小数用大顶堆，优化队列默认小顶堆，改为大顶堆代码
+
+```cpp
+PriorityQueue<Integer> pq = new PriorityQueue<>((o1, o2) -> (o2 - 01));
+```
+还有问题是不太会分析时间复杂度，刚开始代码实现简单还能算出，随着递归这些的使用，O(n)、O(1)和O(logn)容易弄混
 
 ## Week02刷题记录
 
