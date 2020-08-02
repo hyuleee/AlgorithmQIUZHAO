@@ -1,5 +1,35 @@
 ## 学习笔记
 
+### 使用二分查找，寻找一个半有序数组 [4, 5, 6, 7, 0, 1, 2] 中间无序的地方
+
+**思路**：思路和搜索旋转排序数组题目相似，无序部分即旋转点前后
+
+**代码**：
+
+```
+// 当[0, mid] 序列升序: nums[0] <= nums[mid], 向后规约
+// 当[0, mid] 序列存在旋转位: nums[0] > nums[mid],向前规约
+ 
+public class Solution {
+
+   public int search(int[] nums) {
+      int le = 0 
+      int ri = nums.length - 1;
+      while (le <= ri) {
+          int mid = le + (ri - le + 1) / 2;
+          if (nums[mid] > nums[0]) {
+              le = mid + 1;
+          } else {
+              ri = mid - 1;
+          }
+          if (nums[mid] <= nums[mid - 1] && nums[mid] <= nums[0] ) {
+              return nums[mid];
+          }
+      }
+      return 0;
+   }
+```
+
 
 ### 分治代码模板
 
