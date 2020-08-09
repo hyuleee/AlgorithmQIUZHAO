@@ -115,7 +115,7 @@ int fib (int n, int[] a) {
 
 
 | 题号                                                                                                                  | 名称                                                                            | 难度     | 分类         | 备注   | 次数    |
-| ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ------ | ---------- | ---- | ---- |
+| ------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------ | ---------- | ---- | ---- |
 | [62](https://leetcode-cn.com/problems/unique-paths/) | [不同路径](https://leetcode-cn.com/problems/unique-paths/) | 🟡中等  | 动态规划、递归  | -   |  2  |
 | [63](https://leetcode-cn.com/problems/unique-paths-ii/) | [不同路径 II](https://leetcode-cn.com/problems/unique-paths-ii/) | 🟡 中等  | 动态规划、递归  | -   |  1  |
 | [1143](https://leetcode-cn.com/problems/longest-common-subsequence/) | [最长公共子序列](https://leetcode-cn.com/problems/longest-common-subsequence/) | 🟡 中等  | 贪心算法、回溯、动态规划  | -   |  1  |
@@ -143,5 +143,4 @@ int fib (int n, int[] a) {
 | [32](https://leetcode-cn.com/problems/longest-valid-parentheses/) | [最长有效括号](https://leetcode-cn.com/problems/longest-valid-parentheses/) | 🔴️ 困难  | 贪心、双指针、动态规划  | -   |  0  |
 | [363](https://leetcode-cn.com/problems/max-sum-of-rectangle-no-larger-than-k/) | [矩形区域不超过 K 的最大数值和](https://leetcode-cn.com/problems/max-sum-of-rectangle-no-larger-than-k/) | 🔴️ 困难  | 二分查找、动态规划  | -   |  0  |
 | [403](https://leetcode-cn.com/problems/frog-jump/) | [青蛙过河](https://leetcode-cn.com/problems/frog-jump/) | 🔴️ 困难  | DFS、动态规划  | -   |  0  |
-| [410](https://leetcode-cn.com/problems/split-array-largest-sum/) | [分割数组的最大值](https://leetcode-cn.com/problems/split-array-largest-sum/) | 🟢 简单  | 贪心、二分
-动态规划| -   |  0  |
+| [410](https://leetcode-cn.com/problems/split-array-largest-sum/) | [分割数组的最大值](https://leetcode-cn.com/problems/split-array-largest-sum/) | 🟢 简单  | 贪心、二分、动态规划| -   |  0  |
