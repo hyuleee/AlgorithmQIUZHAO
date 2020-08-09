@@ -110,12 +110,13 @@ int fib (int n, int[] a) {
 学习动态规划后，再考虑一道题的时候习惯性的使用动态规划，忘记了可能的DFS和BFS的使用，还是需要多练题，多总结，多看优秀的题解
 
 
+
 ### Week04刷题记录
 
 
 | 题号                                                                                                                  | 名称                                                                            | 难度     | 分类         | 备注   | 次数    |
 | ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ------ | ---------- | ---- | ---- |
-| [62](https://leetcode-cn.com/problems/unique-paths/) | [不同路径](https://leetcode-cn.com/problems/unique-paths/) | 🟡 中等  | 动态规划、递归  | -   |  2  |
+| [62](https://leetcode-cn.com/problems/unique-paths/) | [不同路径](https://leetcode-cn.com/problems/unique-paths/) | 🟡中等  | 动态规划、递归  | -   |  2  |
 | [63](https://leetcode-cn.com/problems/unique-paths-ii/) | [不同路径 II](https://leetcode-cn.com/problems/unique-paths-ii/) | 🟡 中等  | 动态规划、递归  | -   |  1  |
 | [1143](https://leetcode-cn.com/problems/longest-common-subsequence/) | [最长公共子序列](https://leetcode-cn.com/problems/longest-common-subsequence/) | 🟡 中等  | 贪心算法、回溯、动态规划  | -   |  1  |
 | [70](https://leetcode-cn.com/problems/climbing-stairs/) | [爬楼梯](https://leetcode-cn.com/problems/climbing-stairs/) | 🟢 简单  | 递归、回溯、动态规划  | -   |  3  |
