@@ -1,191 +1,190 @@
-## 学习笔记
 
-### 平衡二叉树
-##### AVL树 由于查询时间复杂度是等于树的深度，所以需要平衡二叉树 但节点需要额外存储额外信息，且调整次数频繁
-四种旋转操作 平衡因子bf = {-1, 0, 1}
+学习笔记
 
-##### 红黑树 近似平衡二叉树 确保左右子树高度差小于两倍 不能有相邻的红色结点
 
-##### AVL 红黑树对比
-    AVL树提供更好的查询，因为其更加严格平衡
-		红黑树提供更快的插入删除操作，因为AVL旋转操作更多
-		AVL要存的额外信息更多（高度和平衡因子），需要更多的内存，红黑树只需要一个Bit存红黑，对额外空间的消耗更小
-		综合：在读操作多，写操作很少的时候采用AVL（database），在写操作多的时候用红黑树（map, set库）
-
-### 位运算 或| 与& 反~ 异或^（同为0不同为1）
-
-1. 判断奇偶：
-  x % 2 ==1 -> x & 1 == 1
-  x % 2 ==0 -> x & 1 == 0
-2. 清零最低位1
-  x & (x - 1)
-3. 得到最低位1
-  x & -x
-
-### 字典树 最大限度减少字符串比较
-
-**代码模板**
+### 冒泡 N^2 稳定
+嵌套循环，每次查看相邻元素如果逆序则交换 逐步将最大值放后面
 
 
 ```
-class Trie {
-    private boolean isEnd;
-    private Trie[] next;
-    /** Initialize your data structure here. */
-    public Trie() {
-        isEnd = false;
-        next = new Trie[26];
-    }
-    
-    /** Inserts a word into the trie. */
-    public void insert(String word) {
-        if (word == null || word.length() == 0) return;
-        Trie curr = this;
-        char[] words = word.toCharArray();
-        for (int i = 0;i < words.length;i++) {
-            int n = words[i] - 'a';
-            if (curr.next[n] == null) curr.next[n] = new Trie();
-            curr = curr.next[n];
+public static int [] sort(int [] array){
+  for(i=0;i<length-1;i++)
+      for(j=i+1;j<length;j++)
+      if(arrayVal[i]>arrayVal[j])
+       {
+               //置换位置
+               temp=arrayVal[i];
+               arrayVal[i]=arrayVal[j];
+               arrayVal[j]=temp;
+           }
+  }
+}
+
+```
+
+### 选择 N^2 不稳定
+每次找最小值，放到待排序数组的起始位置
+
+
+```
+    public static void selectionSort(int[] array){
+        for( int i=0; i<array.length; i++ ){
+            int minIdx = i; //记录最小值的位置
+            for( int j=i+1; j<array.length; j++ ){
+                if( array[j]<array[minIdx] ){
+                    minIdx = j;
+                }
+            }
+            if( minIdx!=i ){
+                int temp = array[i];
+                array[i] = array[minIdx];
+                array[minIdx] = temp;
+            }
         }
-        curr.isEnd = true;
-    }
-    
-    /** Returns if the word is in the trie. */
-    public boolean search(String word) {
-        Trie node = searchPrefix(word);
-        return node != null && node.isEnd;
-    }
-    
-    /** Returns if there is any word in the trie that starts with the given prefix. */
-    public boolean startsWith(String prefix) {
-        Trie node = searchPrefix(prefix);
-        return node != null;
+        print(array);
     }
 
-    private Trie searchPrefix(String word) {
-        Trie node = this;
-        char[] words = word.toCharArray();
-        for (int i = 0;i < words.length;i++) {
-            node = node.next[words[i] - 'a'];
-            if (node == null) return null;
+```
+
+
+### 插入 N^2 稳定
+从前往后逐步构建有序序列；对于未排序数据 在已排序序列中从后向前扫描，找到相应位置插入
+
+```
+    public  static void insertionSort(int[] a){
+          for(int i = 1 ; i < a.length; i++){
+              int temp = a[i];
+              int j = i - 1;
+              while( j >= 0 && temp < a[j]){
+                   a[j+1] = a[j];
+                   j--;
+              }  
+              a[j+1] = temp;
+     }
+
+```
+
+
+### 快速 NlogN 不稳定
+数组取标杆pivot，将小元素放pivot左边，大元素放右例，然后依次对右边和左边的子数组继续快排，直到有序
+
+```
+public static void quickSort(int[] array, int begin, int end) {
+    if (end <= begin) return;
+    int pivot = partition(array, begin, end);
+    quickSort(array, begin, pivot - 1);
+    quickSort(array, pivot + 1, end);
+}
+static int partition(int[] a, int begin, int end) {
+    // pivot: 标杆位置，counter: 小于pivot的元素的个数
+    int pivot = end, counter = begin;
+    for (int i = begin; i < end; i++) {
+        if (a[i] < a[pivot]) {
+            int temp = a[counter]; a[counter] = a[i]; a[i] = temp;
+            counter++;
         }
-        return node;
+    }
+    int temp = a[pivot]; a[pivot] = a[counter]; a[counter] = temp;
+    return counter;
+}
+
+```
+
+### 归并 NlogN 稳定
+将长度为N的输入序列分为两个长度为n/2的子序列，对两个子序列分别采用归并排序 排序好后的子序列合并成最终序列
+
+```
+public static void mergeSort(int[] array, int left, int right) {
+    if (right <= left) return;
+    int mid = (left + right) >> 1; // (left + right) / 2
+
+    mergeSort(array, left, mid);
+    mergeSort(array, mid + 1, right);
+    merge(array, left, mid, right);
+}
+
+public static void merge(int[] arr, int left, int mid, int right) {
+        int[] temp = new int[right - left + 1]; // 中间数组
+        int i = left, j = mid + 1, k = 0;
+
+        while (i <= mid && j <= right) {
+            temp[k++] = arr[i] <= arr[j] ? arr[i++] : arr[j++];
+        }
+
+        while (i <= mid)   temp[k++] = arr[i++];
+        while (j <= right) temp[k++] = arr[j++];
+
+        for (int p = 0; p < temp.length; p++) {
+            arr[left + p] = temp[p];
+        }
+        // 也可以用 System.arraycopy(a, start1, b, start2, length)
+    }
+
+```
+
+### 堆 NlogN 不稳定
+数组元素依次放入小顶堆 依次取出堆顶元素并删除
+
+
+```
+
+static void heapify(int[] array, int length, int i) {
+    int left = 2 * i + 1, right = 2 * i + 2；
+    int largest = i;
+    if (left < length && array[left] > array[largest]) {
+        largest = left;
+    }
+    if (right < length && array[right] > array[largest]) {
+        largest = right;
+    }
+    if (largest != i) {
+        int temp = array[i]; array[i] = array[largest]; array[largest] = temp;
+        heapify(array, length, largest);
+    }
+}
+public static void heapSort(int[] array) {
+    if (array.length == 0) return;
+    int length = array.length;
+    for (int i = length / 2-1; i >= 0; i-) 
+        heapify(array, length, i);
+    for (int i = length - 1; i >= 0; i--) {
+        int temp = array[0]; array[0] = array[i]; array[i] = temp;
+        heapify(array, i, 0);
     }
 }
 
-
-```
-### 并查集 组团、匹配问题
-
-**代码模板**
-
-
-```
-class UnionFind{
-        private int count = 0;
-        private int[] parent;
-
-        public UnionFind(int n) {
-            count = n;
-            parent = new int[n];
-//            rank = new int[n];
-            for (int i = 0; i < n; i++) {
-                parent[i] = i;
-            }
-        }
-
-        public int find(int p) {
-            while (p != parent[p]) {
-                parent[p] = parent[parent[p]];
-                p = parent[p];
-            }
-            return p;
-        }
-
-        public void union(int p, int q) {
-            int rootP = find(p);
-            int rootQ = find(q);
-            if (rootP == rootQ) return;
-            parent[rootP] = rootQ;
-            count--;
-        }
-
-        public int count(){
-            return count;
-        }
-
-
-
-    }
-
 ```
 
-### 双向BFS代码模板
+### Week06刷题记录
 
 
-```
-
-        // 总访问数组
-        Set<String> visited = new HashSet<>();
-        
-        //左右哈希表双向BFS
-        Set<String> beginSet = new HashSet<>();
-
-        Set<String> endSet = new HashSet<>();
-        int step = 1;
-        
-        while(!endSet.isEmpty() && !beginSet.isEmpty()) {
-            //采用较小的开始扩散
-            if (beginSet.size() > endSet.size()) {
-                Set<String> temp = beginSet;
-                beginSet = endSet;
-                endSet = temp;
-            }
-
-            Set<String> nextLevel = new HashSet<>();
-            for () {
-                        if () {                   // 根据具体题目要求
-                            if () return step + 1; 
-                            if (!visited.contains(nextWord)) {
-                                nextLevel.add();
-                                visited.add();
-                            }
-                        }  
-                }
-            }
-            beginSet = nextLevel;
-            step++;
-        }
-
-
-
-```
-
-
-
-
-### Week05刷题记录
-
-
-| 题号                                                                                                                  | 名称                                                                            | 难度     | 分类         | 备注   | 次数    |
-| ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ------ | ---------- | ---- | ---- |
-| [52](https://leetcode-cn.com/problems/n-queens-ii/) | [N皇后 II](https://leetcode-cn.com/problems/n-queens-ii/) | 🔴️ 困难  | 位运算  | -   |  2  |
-| [37](https://leetcode-cn.com/problems/sudoku-solver/) | [解数独](https://leetcode-cn.com/problems/sudoku-solver/) | 🔴️ 困难  | 递归、位运算、、A*  | -   |  2  |
-| [212](https://leetcode-cn.com/problems/word-search-ii/) | [单词搜索 II](https://leetcode-cn.com/problems/word-search-ii/) | 🔴️ 困难  | 字典树  | -   |  2  |
-| [70](https://leetcode-cn.com/problems/climbing-stairs/) | [爬楼梯](https://leetcode-cn.com/problems/climbing-stairs/) | 🟢 简单  | 递归、剪枝、动态规划  | -   |  4  |
-| [127](https://leetcode-cn.com/problems/word-ladder/) | [单词接龙](https://leetcode-cn.com/problems/word-ladder/) | 🟡 中等  | 双向BFS  | -   |  2  |
-| [22](https://leetcode-cn.com/problems/generate-parentheses/) | [括号生成](https://leetcode-cn.com/problems/generate-parentheses/) | 🟡 中等  | 递归、剪枝  | -   |  3  |
-| [200](https://leetcode-cn.com/problems/number-of-islands/) | [岛屿生成](https://leetcode-cn.com/problems/number-of-islands/) | 🟡 中等  | DFS、并查集  | -   |  2  |
-| [547](https://leetcode-cn.com/problems/friend-circles/) | [朋友圈](https://leetcode-cn.com/problems/friend-circles/) | 🟡 中等  | 并查集、DFS  | -   |  2  |
-| [208](https://leetcode-cn.com/problems/implement-trie-prefix-tree/) | [实现 Trie (前缀树)](https://leetcode-cn.com/problems/implement-trie-prefix-tree/) | 🟡 中等  | 字典树  | -   |  2  |
-| [190](https://leetcode-cn.com/problems/reverse-bits/) | [颠倒二进制位](https://leetcode-cn.com/problems/reverse-bits/) | 🟢 简单  | 位运算  | -   |  2  |
-| [231](https://leetcode-cn.com/problems/power-of-two/) | [2的幂](https://leetcode-cn.com/problems/power-of-two/) | 🟢 简单  | 位运算  | -   |  2  |
-| [191](https://leetcode-cn.com/problems/number-of-1-bits/) | [位1的个数](https://leetcode-cn.com/problems/number-of-1-bits/) | 🟢 简单  | 位运算  | -   | 2  |
-| [51](https://leetcode-cn.com/problems/n-queens/) | [N皇后](https://leetcode-cn.com/problems/n-queens/) | 🔴️ 困难  | 递归、DFS、BFS  | -   |  3  |
-| [32](https://leetcode-cn.com/problems/longest-valid-parentheses/) | [最长有效括号](https://leetcode-cn.com/problems/longest-valid-parentheses/) | 🔴️ 困难  | 动态规划、栈  | -   |  2  |
-| [130](https://leetcode-cn.com/problems/surrounded-regions/) | [被围绕的区域](https://leetcode-cn.com/problems/surrounded-regions/) | 🟡 中等  | 并查集  | -   |  1  |
-| [36](https://leetcode-cn.com/problems/valid-sudoku/) | [有效的数独](https://leetcode-cn.com/problems/valid-sudoku/) | 🟡 中等  | 位运算、字典树  | -   |  1  |
-| [433](https://leetcode-cn.com/problems/minimum-genetic-mutation/) | [最小基因变化](https://leetcode-cn.com/problems/minimum-genetic-mutation/) | 🟡 中等  | 位运算、BFS  | -   |  1  |
-| [1091](https://leetcode-cn.com/problems/shortest-path-in-binary-matrix/) | [二进制矩阵中的最短路径](https://leetcode-cn.com/problems/shortest-path-in-binary-matrix/) | 🟡 中等  | BFS、A*  | -   |  1  |
-| [338](https://leetcode-cn.com/problems/counting-bits/) | [比特位计数](https://leetcode-cn.com/problems/counting-bits/) | 🟡 中等  | 位运算、动态规划  | -   |  1  |
-| [773](https://leetcode-cn.com/problems/sliding-puzzle/) | [滑动谜题](https://leetcode-cn.com/problems/sliding-puzzle/) | 🔴️ 困难  | 字典树、BFS、A* | -   |  1  |
+| 题号                                                                                                                  | 名称                                                                            | 难度     | 备注   | 次数    |
+| ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ------ | ---- | ---- |
+| [64] | [最小路径和](https://leetcode-cn.com/problems/minimum-path-sum/) | 🟡 中等  | -   |  2  |
+| [120] | [三角形最小路径和](https://leetcode-cn.com/problems/triangle/) | 🟡 中等  | -   |  2  |
+| [72] | [编辑距离](https://leetcode-cn.com/problems/edit-distance/) | 🔴️ 困难  | 转换为二维表格动规   |  2  |
+| [91] | [解码方法](https://leetcode-cn.com/problems/decode-ways/) | 🟡 中等  | -   |  2  |
+| [46] | [全排列](https://leetcode-cn.com/problems/permutations/) | 🟡 中等  | -   |  2  |
+| [493] | [翻转对](https://leetcode-cn.com/problems/reverse-pairs/) | 🔴️ 困难  | 归并排序  |  2  |
+| [56] | [合并区间](https://leetcode-cn.com/problems/merge-intervals/) | 🟡 中等  | -   |  2  |
+| [242] | [有效的字母异位词](https://leetcode-cn.com/problems/valid-anagram/) | 🟢 简单  | -   |  3  |
+| [1122] | [数组的相对排序](https://leetcode-cn.com/problems/relative-sort-array/) | 🟢 简单  | 思路巧妙   |  2  |
+| [121] | [买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/) | 🟢 简单  | 动态规划统一模板   |  2  |
+| [64] | [最小路径和](https://leetcode-cn.com/problems/minimum-path-sum/) | 🟡 中等  | 动态规划原有数组直接更改  |  2  |
+| [198] | [打家劫舍](https://leetcode-cn.com/problems/house-robber/) | 🟢 简单  |  -  |  3  | 
+| [62] | [不同路径](https://leetcode-cn.com/problems/unique-paths/) | 🟡 中等  | 动态规划优化为一维  |  2  |
+| [84] | [柱状图中最大的矩形](https://leetcode-cn.com/problems/largest-rectangle-in-histogram/) | 🔴️ 困难  | 栈得出当前柱子的左右边界模板  |  2  |
+| [85] | [最大矩形](https://leetcode-cn.com/problems/maximal-rectangle/) | 🔴️ 困难  | -   |  1  |
+| [32] | [最长有效括号](https://leetcode-cn.com/problems/longest-valid-parentheses/) | 🔴️ 困难  | 栈优化成左右各遍历一次  |  2  |
+| [300] | [最长上升子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/) | 🟡 中等  | dp定义为当前位置为绝对大时的最长子序列  |  2  |
+| [746] | [使用最小花费爬楼梯](https://leetcode-cn.com/problems/min-cost-climbing-stairs/) | 🟢 简单  | 三行动规   |  2  |
+| [387] | [字符串中的第一个唯一字符](https://leetcode-cn.com/problems/first-unique-character-in-a-string/) | 🟢 简单  | 数组代替hash  |  2  |
+| [14] | [最长公共前缀](https://leetcode-cn.com/problems/longest-common-prefix/) | 🟢 简单  | 对齐从头开始比较  |  2  |
+| [344] | [反转字符串](https://leetcode-cn.com/problems/reverse-string/) | 🟢 简单  | 双指针头尾向中靠齐  |  2  |
+| [49] | [字母异位词分组](https://leetcode-cn.com/problems/group-anagrams/) | 🟡 中等  | 排序后hash映射  |  0  |
+| [8] | [字符串转换整数 (atoi)](https://leetcode-cn.com/problems/string-to-integer-atoi/) | 🟡 中等  | 判断溢出和正负号  |  2  |
+| [151] | [翻转字符串里的单词](https://leetcode-cn.com/problems/reverse-words-in-a-string/) | 🟡 中等  | 分割字符串  |  1  |
+| [438] | [找到字符串中所有字母异位词](https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/) | 🟡 中等  | 双指针滑动数组窗口  |  1  |
+| [1143] | [最长公共子序列](https://leetcode-cn.com/problems/longest-common-subsequence/) | 🟡 中等  | -  |  2  |
+| [5] | [最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/) | 🟡 中等  | 双指针往前往后动规及时更新输出  |  2  |
+| [115] | [不同的子序列](https://leetcode-cn.com/problems/distinct-subsequences/) | 🔴️ 困难  | 子序列不可减少   |  2  |
