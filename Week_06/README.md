@@ -7,18 +7,17 @@
 
 
 ```
-public static int [] sort(int [] array){
-  for(i=0;i<length-1;i++)
-      for(j=i+1;j<length;j++)
-      if(arrayVal[i]>arrayVal[j])
-       {
-               //置换位置
-               temp=arrayVal[i];
-               arrayVal[i]=arrayVal[j];
-               arrayVal[j]=temp;
-           }
-  }
-}
+    public static void bubbleSort(int[] a) {
+        for (int i = a.length - 1; i >= 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (a[j] > a[j+1]) {
+                    int temp = a[j];
+                    a[j] = a[j+1];
+                    a[j+1] = temp;
+                }
+            }
+        }
+    }
 
 ```
 
@@ -27,21 +26,21 @@ public static int [] sort(int [] array){
 
 
 ```
-    public static void selectionSort(int[] array){
-        for( int i=0; i<array.length; i++ ){
-            int minIdx = i; //记录最小值的位置
-            for( int j=i+1; j<array.length; j++ ){
-                if( array[j]<array[minIdx] ){
-                    minIdx = j;
+    public static void selectionSort(int[] a){
+        int min;
+        for (int i=0; i < a.length-1; i++) {
+            min = i;
+            for (int j = i+1; j < a.length; j++) {
+                if (a[min] < a[j]) {
+                    min = j;
                 }
             }
-            if( minIdx!=i ){
-                int temp = array[i];
-                array[i] = array[minIdx];
-                array[minIdx] = temp;
+            if (min != i) {
+                int temp = a[min];
+                a[min] = a[i];
+                a[i] = temp;
             }
         }
-        print(array);
     }
 
 ```
@@ -51,16 +50,17 @@ public static int [] sort(int [] array){
 从前往后逐步构建有序序列；对于未排序数据 在已排序序列中从后向前扫描，找到相应位置插入
 
 ```
-    public  static void insertionSort(int[] a){
-          for(int i = 1 ; i < a.length; i++){
-              int temp = a[i];
-              int j = i - 1;
-              while( j >= 0 && temp < a[j]){
-                   a[j+1] = a[j];
-                   j--;
-              }  
-              a[j+1] = temp;
-     }
+    public static void insertSort (int[] a) {
+        for (int i = 0; i < a.length; i++) {
+            int temp = a[i];
+            int j = i;
+            while (j > 0 && temp < a[j-1]) {
+                a[j] = a[j-1];
+                j--;
+            }
+            a[j] = temp;
+        }
+    }
 
 ```
 
